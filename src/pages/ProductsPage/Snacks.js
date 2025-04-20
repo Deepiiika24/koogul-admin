@@ -98,7 +98,6 @@ function Snacks() {
     });
     setImagePreview(selectedSnacks.full_image_url);
     setOpen(true);
-    toast.success("Snacks Edited Successfully!")
     handleCloseMenu();
   };
 
@@ -219,16 +218,16 @@ function Snacks() {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  snacks.map((data, index) => (
-                    <TableRow key={data.id}>
+                  snacks.map((snacks, index) => (
+                    <TableRow key={snacks.id}>
                       <TableCell>{calculateIndex(index)}</TableCell>
-                      <TableCell>{data.name}</TableCell>
-                      <TableCell>₹{data.price}</TableCell>
+                      <TableCell>{snacks.name}</TableCell>
+                      <TableCell>₹{snacks.price}</TableCell>
                       <TableCell>
-                        {data.full_image_url && (
+                        {snacks.full_image_url && (
                           <img
-                            src={data.full_image_url}
-                            alt={data.name}
+                            src={snacks.full_image_url}
+                            alt={snacks.name}
                             width={60}
                             height={60}
                             style={{ objectFit: 'cover', borderRadius: 8 }}
@@ -239,7 +238,7 @@ function Snacks() {
                         <Iconify
                           icon="mdi:dots-vertical"
                           sx={{ cursor: 'pointer' }}
-                          onClick={(event) => handleOpenMenu(event, data)}
+                          onClick={(event) => handleOpenMenu(event, snacks)}
                         />
                       </TableCell>
                     </TableRow>

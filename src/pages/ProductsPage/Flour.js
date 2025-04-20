@@ -98,7 +98,6 @@ function Flour() {
     });
     setImagePreview(selectedFlour.full_image_url);
     setOpen(true);
-    toast.success("Flour Edited Successfully!")
     handleCloseMenu();
   };
 

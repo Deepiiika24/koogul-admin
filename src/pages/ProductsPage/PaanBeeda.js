@@ -98,7 +98,6 @@ function PaanBeeda() {
     });
     setImagePreview(selectedPaanBeeda.full_image_url);
     setOpen(true);
-    toast.success("Paan Beeda Edited Successfully!")
     handleCloseMenu();
   };
 
@@ -219,16 +218,16 @@ function PaanBeeda() {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  paanBeedas.map((data, index) => (
-                    <TableRow key={data.id}>
+                  paanBeedas.map((paanBeeda, index) => (
+                    <TableRow key={paanBeeda.id}>
                       <TableCell>{calculateIndex(index)}</TableCell>
-                      <TableCell>{data.name}</TableCell>
-                      <TableCell>₹{data.price}</TableCell>
+                      <TableCell>{paanBeeda.name}</TableCell>
+                      <TableCell>₹{paanBeeda.price}</TableCell>
                       <TableCell>
-                        {data.full_image_url && (
+                        {paanBeeda.full_image_url && (
                           <img
-                            src={data.full_image_url}
-                            alt={data.name}
+                            src={paanBeeda.full_image_url}
+                            alt={paanBeeda.name}
                             width={60}
                             height={60}
                             style={{ objectFit: 'cover', borderRadius: 8 }}
@@ -239,7 +238,7 @@ function PaanBeeda() {
                         <Iconify
                           icon="mdi:dots-vertical"
                           sx={{ cursor: 'pointer' }}
-                          onClick={(event) => handleOpenMenu(event, data)}
+                          onClick={(event) => handleOpenMenu(event, paanBeeda)}
                         />
                       </TableCell>
                     </TableRow>

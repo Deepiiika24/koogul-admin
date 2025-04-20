@@ -98,7 +98,6 @@ function Spices() {
     });
     setImagePreview(selectedSpices.full_image_url);
     setOpen(true);
-    toast.success("Spices Edited Successfully!")
     handleCloseMenu();
   };
 
@@ -219,16 +218,16 @@ function Spices() {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  spices.map((data, index) => (
-                    <TableRow key={data.id}>
+                  spices.map((spices, index) => (
+                    <TableRow key={spices.id}>
                       <TableCell>{calculateIndex(index)}</TableCell>
-                      <TableCell>{data.name}</TableCell>
-                      <TableCell>₹{data.price}</TableCell>
+                      <TableCell>{spices.name}</TableCell>
+                      <TableCell>₹{spices.price}</TableCell>
                       <TableCell>
-                        {data.full_image_url && (
+                        {spices.full_image_url && (
                           <img
-                            src={data.full_image_url}
-                            alt={data.name}
+                            src={spices.full_image_url}
+                            alt={spices.name}
                             width={60}
                             height={60}
                             style={{ objectFit: 'cover', borderRadius: 8 }}
@@ -239,7 +238,7 @@ function Spices() {
                         <Iconify
                           icon="mdi:dots-vertical"
                           sx={{ cursor: 'pointer' }}
-                          onClick={(event) => handleOpenMenu(event, data)}
+                          onClick={(event) => handleOpenMenu(event, spices)}
                         />
                       </TableCell>
                     </TableRow>

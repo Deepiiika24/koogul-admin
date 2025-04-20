@@ -98,7 +98,6 @@ function Oil() {
     });
     setImagePreview(selectedOil.full_image_url);
     setOpen(true);
-    toast.success("Oil Edited Successfully!")
     handleCloseMenu();
   };
 
@@ -219,16 +218,16 @@ function Oil() {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  oils.map((data, index) => (
-                    <TableRow key={data.id}>
+                  oils.map((oil, index) => (
+                    <TableRow key={oil.id}>
                       <TableCell>{calculateIndex(index)}</TableCell>
-                      <TableCell>{data.name}</TableCell>
-                      <TableCell>₹{data.price}</TableCell>
+                      <TableCell>{oil.name}</TableCell>
+                      <TableCell>₹{oil.price}</TableCell>
                       <TableCell>
-                        {data.full_image_url && (
+                        {oil.full_image_url && (
                           <img
-                            src={data.full_image_url}
-                            alt={data.name}
+                            src={oil.full_image_url}
+                            alt={oil.name}
                             width={60}
                             height={60}
                             style={{ objectFit: 'cover', borderRadius: 8 }}
@@ -239,7 +238,7 @@ function Oil() {
                         <Iconify
                           icon="mdi:dots-vertical"
                           sx={{ cursor: 'pointer' }}
-                          onClick={(event) => handleOpenMenu(event, data)}
+                          onClick={(event) => handleOpenMenu(event, oil)}
                         />
                       </TableCell>
                     </TableRow>

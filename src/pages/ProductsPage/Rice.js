@@ -98,7 +98,6 @@ function Rice() {
     });
     setImagePreview(selectedRice.full_image_url);
     setOpen(true);
-    toast.success("Rice Edited Successfully!")
     handleCloseMenu();
   };
 
@@ -110,6 +109,7 @@ function Rice() {
   };
 
   const handleSubmit = async () => {
+    debugger
     try {
       const formData = new FormData();
       formData.append('name', riceForm.name);
@@ -219,16 +219,16 @@ function Rice() {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  rices.map((data, index) => (
-                    <TableRow key={data.id}>
+                  rices.map((rice, index) => (
+                    <TableRow key={rice.id}>
                       <TableCell>{calculateIndex(index)}</TableCell>
-                      <TableCell>{data.name}</TableCell>
-                      <TableCell>₹{data.price}</TableCell>
+                      <TableCell>{rice.name}</TableCell>
+                      <TableCell>₹{rice.price}</TableCell>
                       <TableCell>
-                        {data.full_image_url && (
+                        {rice.full_image_url && (
                           <img
-                            src={data.full_image_url}
-                            alt={data.name}
+                            src={rice.full_image_url}
+                            alt={rice.name}
                             width={60}
                             height={60}
                             style={{ objectFit: 'cover', borderRadius: 8 }}
@@ -239,7 +239,7 @@ function Rice() {
                         <Iconify
                           icon="mdi:dots-vertical"
                           sx={{ cursor: 'pointer' }}
-                          onClick={(event) => handleOpenMenu(event, data)}
+                          onClick={(event) => handleOpenMenu(event, rice)}
                         />
                       </TableCell>
                     </TableRow>

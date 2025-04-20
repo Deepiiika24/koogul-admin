@@ -98,7 +98,6 @@ function Leaf() {
     });
     setImagePreview(selectedLeaf.full_image_url);
     setOpen(true);
-    toast.success("Leaf Edited Successfully!")
     handleCloseMenu();
   };
 
