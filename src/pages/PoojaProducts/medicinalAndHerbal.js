@@ -6,11 +6,11 @@ import Iconify from 'src/components/iconify';
 import PaginationComponent from 'src/pagination';
 import { getData, postData, putData, deleteData } from 'src/webService/webService';
 
-function Flour() {
-  const [flours, setFlours] = useState([]);
+function MedicinalAndHerbal() {
+  const [herbals, setHerbals] = useState([]);
   const [open, setOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState(null);
-  const [selectedFlour, setSelectedFlour] = useState(null);
+  const [selectedHerbal, setSelectedHerbal] = useState(null);
   const [totalCount, setTotalCount] = useState(0);
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,7 +20,7 @@ function Flour() {
 
   const token = localStorage.getItem('token');
 
-  const [flourForm, setFlourForm] = useState({
+  const [herbalForm, setHerbalForm] = useState({
     name: '',
     price: '',
     image: null
@@ -30,14 +30,14 @@ function Flour() {
     const newLimit = parseInt(event.target.value);
     setLimit(newLimit);
     setCurrentPage(1);
-    getAllFlours(1, newLimit);
+    getAllHerbals(1, newLimit);
   };
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
       const newPage = currentPage - 1;
       setCurrentPage(newPage);
-      getAllFlours(newPage, limit);
+      getAllHerbals(newPage, limit);
     }
   };
 
@@ -45,7 +45,7 @@ function Flour() {
     if (currentPage < totalPages) {
       const newPage = currentPage + 1;
       setCurrentPage(newPage);
-      getAllFlours(newPage, limit);
+      getAllHerbals(newPage, limit);
     }
   };
 
@@ -55,13 +55,13 @@ function Flour() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFlourForm(prev => ({ ...prev, [name]: value }));
+    setHerbalForm(prev => ({ ...prev, [name]: value }));
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFlourForm(prev => ({ ...prev, image: file }));
+      setHerbalForm(prev => ({ ...prev, image: file }));
 
       // Create preview
       const reader = new FileReader();
@@ -72,106 +72,106 @@ function Flour() {
     }
   };
 
-  const handleOpenMenu = (event, flour) => {
+  const handleOpenMenu = (event, herb) => {
     setOpenMenu(event.currentTarget);
-    setSelectedFlour(flour);
+    setSelectedHerbal(herb);
   };
 
   const handleCloseMenu = () => {
     setOpenMenu(null);
-    setSelectedFlour(null);
+    setSelectedHerbal(null);
   };
 
   const handleOpenAddDialog = () => {
     setIsEditMode(false);
-    setFlourForm({ name: '', price: '', image: null });
+    setHerbalForm({ name: '', price: '', image: null });
     setImagePreview(null);
     setOpen(true);
   };
 
   const handleOpenEditDialog = () => {
     setIsEditMode(true);
-    setFlourForm({
-      name: selectedFlour.name,
-      price: selectedFlour.price,
+    setHerbalForm({
+      name: selectedHerbal.name,
+      price: selectedHerbal.price,
       image: null
     });
-    setImagePreview(selectedFlour.full_image_url);
+    setImagePreview(selectedHerbal.full_image_url);
     setOpen(true);
     setOpenMenu(false);
   };
 
   const handleClose = () => {
     setOpen(false);
-    setFlourForm({ name: '', price: '', image: null });
+    setHerbalForm({ name: '', price: '', image: null });
     setImagePreview(null);
-    setSelectedFlour(null);
+    setSelectedHerbal(null);
   };
 
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
-      formData.append('name', flourForm.name);
-      formData.append('price', flourForm.price);
-      if (flourForm.image) {
-        formData.append('image', flourForm.image);
+      formData.append('name', herbalForm.name);
+      formData.append('price', herbalForm.price);
+      if (herbalForm.image) {
+        formData.append('image', herbalForm.image);
       }
 
-      if (isEditMode && selectedFlour) {
-        await putData(`flour/${selectedFlour.id}`, formData, token, true);
+      if (isEditMode && selectedHerbal) {
+        await putData(`poojaProducts/medicinal-and-herbal/${selectedHerbal.id}`, formData, token, true);
       } else {
-        await postData('flour', formData, token, true);
+        await postData('poojaProducts/medicinal-and-herbal', formData, token, true);
       }
 
       handleClose();
-      toast.success("Flour Added Successfully!")
-      getAllFlours(currentPage, limit);
+      toast.success("Medicinal and Herbal Product Added Successfully!")
+      getAllHerbals(currentPage, limit);
     } catch (err) {
-      console.error('Error submitting flour:', err);
-      toast.error("Error submitting flour:", err);
+      console.error('Error submitting Medicinal and Herbal Product:', err);
+      toast.error("Error submitting Medicinal and Herbal Product:", err);
     }
   };
 
   const handleDelete = async () => {
     try {
-      if (selectedFlour) {
-        await deleteData(`flour/${selectedFlour.id}`, token);
-        getAllFlours(currentPage, limit);
+      if (selectedHerbal) {
+        await deleteData(`poojaProducts/medicinal-and-herbal/${selectedHerbal.id}`, token);
+        getAllHerbals(currentPage, limit);
       }
       handleCloseMenu();
-      toast.success("Flour Deleted Successfully!");
+      toast.success("Medicinal and Herbal Product Deleted Successfully!");
     } catch (err) {
-      console.error('Error deleting flour:', err);
-      toast.error('Error deleting flour:', err)
+      console.error('Error deleting Medicinal and Herbal Product:', err);
+      toast.error('Error deleting Medicinal and Herbal Product:', err)
     }
   };
 
-  const getAllFlours = async (page = 1, limit = 5) => {
+  const getAllHerbals = async (page = 1, limit = 5) => {
     try {
       const params = { page, limit };
-      const res = await getData('flour', params);
-      setFlours(res.data);
+      const res = await getData('poojaProducts/medicinal-and-herbal', params);
+      setHerbals(res.data);
       setTotalCount(res.totalItems);
       setTotalPages(res.totalPages);
       setCurrentPage(res.currentPage);
     } catch (err) {
-      console.error('Error fetching flour:', err);
+      console.error('Error fetching Medicinal and Herbal:', err);
     }
   };
 
   useEffect(() => {
-    getAllFlours();
+    getAllHerbals();
   }, []);
 
   return (
     <>
       <Helmet>
-        <title>Flour | Koogul Admin</title>
+        <title>Medicinal and Herbal | Koogul Admin</title>
       </Helmet>
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Flour
+            Medicinal and Herbal
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
             <Box
@@ -194,7 +194,7 @@ function Flour() {
               startIcon={<Iconify icon="eva:plus-fill" />}
               onClick={handleOpenAddDialog}
             >
-              Add Flour
+              Add Product
             </Button>
           </Box>
         </Stack>
@@ -211,23 +211,23 @@ function Flour() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {flours.length === 0 ? (
+                {herbals.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={5} align="center">
-                      No Flour found
+                      No Medicinal and Herbal Product found
                     </TableCell>
                   </TableRow>
                 ) : (
-                  flours.map((flour, index) => (
-                    <TableRow key={flour.id}>
+                  herbals.map((herb, index) => (
+                    <TableRow key={herb.id}>
                       <TableCell>{calculateIndex(index)}</TableCell>
-                      <TableCell>{flour.name}</TableCell>
-                      <TableCell>₹{flour.price}</TableCell>
+                      <TableCell>{herb.name}</TableCell>
+                      <TableCell>₹{herb.price}</TableCell>
                       <TableCell>
-                        {flour.full_image_url && (
+                        {herb.full_image_url && (
                           <img
-                            src={flour.full_image_url}
-                            alt={flour.name}
+                            src={herb.full_image_url}
+                            alt={herb.name}
                             width={60}
                             height={60}
                             style={{ objectFit: 'cover', borderRadius: 8 }}
@@ -238,7 +238,7 @@ function Flour() {
                         <Iconify
                           icon="mdi:dots-vertical"
                           sx={{ cursor: 'pointer' }}
-                          onClick={(event) => handleOpenMenu(event, flour)}
+                          onClick={(event) => handleOpenMenu(event, herb)}
                         />
                       </TableCell>
                     </TableRow>
@@ -250,14 +250,14 @@ function Flour() {
 
           {/* Add/Edit Dialog */}
           <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-            <DialogTitle>{isEditMode ? 'Edit' : 'Add'} Flour</DialogTitle>
+            <DialogTitle>{isEditMode ? 'Edit' : 'Add'} Medicinal and Herbal Product</DialogTitle>
             <DialogContent>
               <TextField
                 margin="dense"
                 label="Name"
                 name="name"
                 fullWidth
-                value={flourForm.name}
+                value={herbalForm.name}
                 onChange={handleInputChange}
                 sx={{ mb: 2 }}
               />
@@ -267,18 +267,18 @@ function Flour() {
                 name="price"
                 type="number"
                 fullWidth
-                value={flourForm.price}
+                value={herbalForm.price}
                 onChange={handleInputChange}
                 sx={{ mb: 2 }}
               />
               <input
                 accept="image/*"
                 style={{ display: 'none' }}
-                id="flour-image-upload"
+                id="herb-image-upload"
                 type="file"
                 onChange={handleImageChange}
               />
-              <label htmlFor="flour-image-upload">
+              <label htmlFor="herb-image-upload">
                 <Button
                   variant="outlined"
                   component="span"
@@ -336,7 +336,7 @@ function Flour() {
           </Popover>
 
           <PaginationComponent
-            name={"Flours"}
+            name={"Medicinal and Herbal Products"}
             totalcount={totalCount}
             limit={limit}
             handleLimitChange={handleLimitChange}
@@ -351,4 +351,4 @@ function Flour() {
   );
 }
 
-export default Flour;
+export default MedicinalAndHerbal;

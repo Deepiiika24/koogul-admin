@@ -77,11 +77,6 @@ function Rice() {
     setSelectedRice(rice);
   };
 
-  const handleCloseMenu = () => {
-    setOpenMenu(null);
-    setSelectedRice(null);
-  };
-
   const handleOpenAddDialog = () => {
     setIsEditMode(false);
     setRiceForm({ name: '', price: '', image: null });
@@ -98,7 +93,12 @@ function Rice() {
     });
     setImagePreview(selectedRice.full_image_url);
     setOpen(true);
-    handleCloseMenu();
+    setOpenMenu(false);
+  };
+
+  const handleCloseMenu = () => {
+    setOpenMenu(null);
+    setSelectedRice(null);
   };
 
   const handleClose = () => {
@@ -250,7 +250,7 @@ function Rice() {
           </TableContainer>
 
           {/* Add/Edit Dialog */}
-          <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+          <Dialog open={open} onClose={() => { handleClose(); handleCloseMenu(); }} fullWidth maxWidth="sm">
             <DialogTitle>{isEditMode ? 'Edit' : 'Add'} Rice</DialogTitle>
             <DialogContent>
               <TextField

@@ -98,7 +98,7 @@ function Masala() {
     });
     setImagePreview(selectedMasala.full_image_url);
     setOpen(true);
-    handleCloseMenu();
+    setOpenMenu(false);
   };
 
   const handleClose = () => {

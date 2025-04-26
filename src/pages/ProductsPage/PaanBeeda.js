@@ -98,7 +98,7 @@ function PaanBeeda() {
     });
     setImagePreview(selectedPaanBeeda.full_image_url);
     setOpen(true);
-    handleCloseMenu();
+    setOpenMenu(false);
   };
 
   const handleClose = () => {

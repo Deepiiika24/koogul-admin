@@ -98,7 +98,7 @@ function Oil() {
     });
     setImagePreview(selectedOil.full_image_url);
     setOpen(true);
-    handleCloseMenu();
+    setOpenMenu(false);
   };
 
   const handleClose = () => {

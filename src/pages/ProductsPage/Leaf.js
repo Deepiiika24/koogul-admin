@@ -98,7 +98,7 @@ function Leaf() {
     });
     setImagePreview(selectedLeaf.full_image_url);
     setOpen(true);
-    handleCloseMenu();
+    setOpenMenu(false);
   };
 
   const handleClose = () => {

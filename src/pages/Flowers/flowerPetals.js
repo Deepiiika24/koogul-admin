@@ -6,11 +6,11 @@ import Iconify from 'src/components/iconify';
 import PaginationComponent from 'src/pagination';
 import { getData, postData, putData, deleteData } from 'src/webService/webService';
 
-function Flour() {
-  const [flours, setFlours] = useState([]);
+function FlowerPetals() {
+  const [petals, setPetals] = useState([]);
   const [open, setOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState(null);
-  const [selectedFlour, setSelectedFlour] = useState(null);
+  const [selectedPetals, setSelectedPetals] = useState(null);
   const [totalCount, setTotalCount] = useState(0);
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,7 +20,7 @@ function Flour() {
 
   const token = localStorage.getItem('token');
 
-  const [flourForm, setFlourForm] = useState({
+  const [petalForm, setPetalForm] = useState({
     name: '',
     price: '',
     image: null
@@ -30,14 +30,14 @@ function Flour() {
     const newLimit = parseInt(event.target.value);
     setLimit(newLimit);
     setCurrentPage(1);
-    getAllFlours(1, newLimit);
+    getAllPetals(1, newLimit);
   };
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
       const newPage = currentPage - 1;
       setCurrentPage(newPage);
-      getAllFlours(newPage, limit);
+      getAllPetals(newPage, limit);
     }
   };
 
@@ -45,7 +45,7 @@ function Flour() {
     if (currentPage < totalPages) {
       const newPage = currentPage + 1;
       setCurrentPage(newPage);
-      getAllFlours(newPage, limit);
+      getAllPetals(newPage, limit);
     }
   };
 
@@ -55,13 +55,13 @@ function Flour() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFlourForm(prev => ({ ...prev, [name]: value }));
+    setPetalForm(prev => ({ ...prev, [name]: value }));
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFlourForm(prev => ({ ...prev, image: file }));
+      setPetalForm(prev => ({ ...prev, image: file }));
 
       // Create preview
       const reader = new FileReader();
@@ -72,106 +72,106 @@ function Flour() {
     }
   };
 
-  const handleOpenMenu = (event, flour) => {
+  const handleOpenMenu = (event, petal) => {
     setOpenMenu(event.currentTarget);
-    setSelectedFlour(flour);
+    setSelectedPetals(petal);
   };
 
   const handleCloseMenu = () => {
     setOpenMenu(null);
-    setSelectedFlour(null);
+    setSelectedPetals(null);
   };
 
   const handleOpenAddDialog = () => {
     setIsEditMode(false);
-    setFlourForm({ name: '', price: '', image: null });
+    setPetalForm({ name: '', price: '', image: null });
     setImagePreview(null);
     setOpen(true);
   };
 
   const handleOpenEditDialog = () => {
     setIsEditMode(true);
-    setFlourForm({
-      name: selectedFlour.name,
-      price: selectedFlour.price,
+    setPetalForm({
+      name: selectedPetals.name,
+      price: selectedPetals.price,
       image: null
     });
-    setImagePreview(selectedFlour.full_image_url);
+    setImagePreview(selectedPetals.full_image_url);
     setOpen(true);
     setOpenMenu(false);
   };
 
   const handleClose = () => {
     setOpen(false);
-    setFlourForm({ name: '', price: '', image: null });
+    setPetalForm({ name: '', price: '', image: null });
     setImagePreview(null);
-    setSelectedFlour(null);
+    setSelectedPetals(null);
   };
 
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
-      formData.append('name', flourForm.name);
-      formData.append('price', flourForm.price);
-      if (flourForm.image) {
-        formData.append('image', flourForm.image);
+      formData.append('name', petalForm.name);
+      formData.append('price', petalForm.price);
+      if (petalForm.image) {
+        formData.append('image', petalForm.image);
       }
 
-      if (isEditMode && selectedFlour) {
-        await putData(`flour/${selectedFlour.id}`, formData, token, true);
+      if (isEditMode && selectedPetals) {
+        await putData(`flower/flower-petals/${selectedPetals.id}`, formData, token, true);
       } else {
-        await postData('flour', formData, token, true);
+        await postData('flower/flower-petals', formData, token, true);
       }
 
       handleClose();
-      toast.success("Flour Added Successfully!")
-      getAllFlours(currentPage, limit);
+      toast.success("Flower Petals Added Successfully!")
+      getAllPetals(currentPage, limit);
     } catch (err) {
-      console.error('Error submitting flour:', err);
-      toast.error("Error submitting flour:", err);
+      console.error('Error submitting Flower Petals:', err);
+      toast.error("Error submitting Flower Petals:", err);
     }
   };
 
   const handleDelete = async () => {
     try {
-      if (selectedFlour) {
-        await deleteData(`flour/${selectedFlour.id}`, token);
-        getAllFlours(currentPage, limit);
+      if (selectedPetals) {
+        await deleteData(`flower/flower-petals/${selectedPetals.id}`, token);
+        getAllPetals(currentPage, limit);
       }
       handleCloseMenu();
-      toast.success("Flour Deleted Successfully!");
+      toast.success("Flower Petals Deleted Successfully!");
     } catch (err) {
-      console.error('Error deleting flour:', err);
-      toast.error('Error deleting flour:', err)
+      console.error('Error deleting Flower Petals:', err);
+      toast.error('Error deleting Flower Petals:', err)
     }
   };
 
-  const getAllFlours = async (page = 1, limit = 5) => {
+  const getAllPetals = async (page = 1, limit = 5) => {
     try {
       const params = { page, limit };
-      const res = await getData('flour', params);
-      setFlours(res.data);
+      const res = await getData('flower/flower-petals', params);
+      setPetals(res.data);
       setTotalCount(res.totalItems);
       setTotalPages(res.totalPages);
       setCurrentPage(res.currentPage);
     } catch (err) {
-      console.error('Error fetching flour:', err);
+      console.error('Error fetching Flower Petals:', err);
     }
   };
 
   useEffect(() => {
-    getAllFlours();
+    getAllPetals();
   }, []);
 
   return (
     <>
       <Helmet>
-        <title>Flour | Koogul Admin</title>
+        <title>Flower Petals | Koogul Admin</title>
       </Helmet>
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Flour
+            Flower Petals
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
             <Box
@@ -194,7 +194,7 @@ function Flour() {
               startIcon={<Iconify icon="eva:plus-fill" />}
               onClick={handleOpenAddDialog}
             >
-              Add Flour
+              Add Flower Petals
             </Button>
           </Box>
         </Stack>
@@ -211,23 +211,23 @@ function Flour() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {flours.length === 0 ? (
+                {petals.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={5} align="center">
-                      No Flour found
+                      No Flower Petals found
                     </TableCell>
                   </TableRow>
                 ) : (
-                  flours.map((flour, index) => (
-                    <TableRow key={flour.id}>
+                  petals.map((petal, index) => (
+                    <TableRow key={petal.id}>
                       <TableCell>{calculateIndex(index)}</TableCell>
-                      <TableCell>{flour.name}</TableCell>
-                      <TableCell>₹{flour.price}</TableCell>
+                      <TableCell>{petal.name}</TableCell>
+                      <TableCell>₹{petal.price}</TableCell>
                       <TableCell>
-                        {flour.full_image_url && (
+                        {petal.full_image_url && (
                           <img
-                            src={flour.full_image_url}
-                            alt={flour.name}
+                            src={petal.full_image_url}
+                            alt={petal.name}
                             width={60}
                             height={60}
                             style={{ objectFit: 'cover', borderRadius: 8 }}
@@ -238,7 +238,7 @@ function Flour() {
                         <Iconify
                           icon="mdi:dots-vertical"
                           sx={{ cursor: 'pointer' }}
-                          onClick={(event) => handleOpenMenu(event, flour)}
+                          onClick={(event) => handleOpenMenu(event, petal)}
                         />
                       </TableCell>
                     </TableRow>
@@ -250,14 +250,14 @@ function Flour() {
 
           {/* Add/Edit Dialog */}
           <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-            <DialogTitle>{isEditMode ? 'Edit' : 'Add'} Flour</DialogTitle>
+            <DialogTitle>{isEditMode ? 'Edit' : 'Add'} Flower Petal</DialogTitle>
             <DialogContent>
               <TextField
                 margin="dense"
                 label="Name"
                 name="name"
                 fullWidth
-                value={flourForm.name}
+                value={petalForm.name}
                 onChange={handleInputChange}
                 sx={{ mb: 2 }}
               />
@@ -267,18 +267,18 @@ function Flour() {
                 name="price"
                 type="number"
                 fullWidth
-                value={flourForm.price}
+                value={petalForm.price}
                 onChange={handleInputChange}
                 sx={{ mb: 2 }}
               />
               <input
                 accept="image/*"
                 style={{ display: 'none' }}
-                id="flour-image-upload"
+                id="petal-image-upload"
                 type="file"
                 onChange={handleImageChange}
               />
-              <label htmlFor="flour-image-upload">
+              <label htmlFor="petal-image-upload">
                 <Button
                   variant="outlined"
                   component="span"
@@ -336,7 +336,7 @@ function Flour() {
           </Popover>
 
           <PaginationComponent
-            name={"Flours"}
+            name={"Flower Petals"}
             totalcount={totalCount}
             limit={limit}
             handleLimitChange={handleLimitChange}
@@ -351,4 +351,4 @@ function Flour() {
   );
 }
 
-export default Flour;
+export default FlowerPetals;

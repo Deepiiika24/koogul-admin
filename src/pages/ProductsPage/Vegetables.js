@@ -98,8 +98,7 @@ function Vegetables() {
     });
     setImagePreview(selectedVegetable.full_image_url);
     setOpen(true);
-    toast.success("Vegetable Edited Successfully!")
-    handleCloseMenu();
+    setOpenMenu(false);
   };
 
   const handleClose = () => {

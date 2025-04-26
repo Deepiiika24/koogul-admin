@@ -36,16 +36,6 @@ const navConfig = [
         icon: icon('ic_flour'),
       },
       {
-        title: 'Pooja Products',
-        path: '/dashboard/products/pooja-products',
-        icon: icon('ic_pooja'),
-      },
-      {
-        title: 'Flower',
-        path: '/dashboard/products/flower',
-        icon: icon('ic_flower'),
-      },
-      {
         title: 'Leaf',
         path: '/dashboard/products/leaf',
         icon: icon('ic_leaf'),
@@ -77,6 +67,63 @@ const navConfig = [
       },
     ]
   },
+  {
+    title: 'Flower',
+    icon: icon('ic_flower'),
+    children: [
+      {
+        title: "Flower Heads",
+        path: '/dashboard/flowers/flower-heads',
+        icon: icon('ic_flower'),
+      },
+      {
+        title: "Flower Garlands",
+        path: '/dashboard/flowers/flower-garlands',
+        icon: icon('ic_flower'),
+      },
+      {
+        title: "Flower Strings",
+        path: '/dashboard/flowers/flower-strings',
+        icon: icon('ic_flower'),
+      },
+      {
+        title: "Flower Petals",
+        path: '/dashboard/flowers/flower-petals',
+        icon: icon('ic_flower'),
+      },
+    ]
+  },
+  {
+    title: 'Pooja Products',
+    icon: icon('ic_pooja'),
+    children: [
+      {
+        title: "Special Pooja Kit",
+        path: '/dashboard/pooja-products/special-pooja-kit',
+        icon: icon('ic_pooja'),
+      },
+      {
+        title: "Brass Pooja Product",
+        path: '/dashboard/pooja-products/brass-pooja-products',
+        icon: icon('ic_pooja'),
+      },
+      {
+        title: "Spiritual and Religious",
+        path: '/dashboard/pooja-products/spiritual-and-religious',
+        icon: icon('ic_pooja'),
+      },
+      {
+        title: "Medicinal and Herbal",
+        path: '/dashboard/pooja-products/medicinal-and-herbal',
+        icon: icon('ic_pooja'),
+      },
+      {
+        title: "Agricultural and Natural",
+        path: '/dashboard/pooja-products/agriculture-and-natural',
+        icon: icon('ic_pooja'),
+      },
+    ]
+  }
 ];
 
 export default navConfig;
